@@ -7,8 +7,8 @@ class GenreRepositoryImpl (private val service: TheMovieDBService): GenreReposit
 
     override suspend fun getGenresData() = flow {
         try {
-            val genreObject = service.getGenres()
-            emit(genreObject)
+            val genresResponse = service.getGenres()
+            emit(genresResponse)
         } catch (e: Exception){
             throw e
         }

@@ -51,6 +51,9 @@ object DataModule {
             single <SimilarMoviesRepository> {
                 SimilarMoviesRepositoryImpl(get())
             }
+            single <ConfigurationRepository> {
+                ConfigurationRepositoryImpl(get())
+            }
         }
     }
 

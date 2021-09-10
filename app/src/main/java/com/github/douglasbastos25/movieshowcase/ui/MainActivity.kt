@@ -3,6 +3,7 @@ package com.github.douglasbastos25.movieshowcase.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.bumptech.glide.Glide
 import com.github.douglasbastos25.movieshowcase.data.model.Genre
 import com.github.douglasbastos25.movieshowcase.preferences.SharedPreferencesLike
 import com.github.douglasbastos25.movieshowcase.preferences.SharedPreferencesLike.Companion.LIKE_VALUE
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
     private var genresList: List<Genre> = listOf()
     private val adapter by lazy {SimilarMoviesListAdapter()}
 
+    private var mainPosterBaseUrl = ""
+    private var similarMoviePosterBaseUrl = ""
+
     companion object{
         const val MOVIE_ID = 38
     }
@@ -30,9 +34,27 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvSimilarMovies.adapter = adapter
 
-        getMovie()
+        getConfiguration()
         loadContent()
         setListeners()
+    }
+
+    private fun getConfiguration(){
+        viewModel.getConfiguration()
+        viewModel.configuration.observe(this){
+            when(it){
+                is MainViewModel.ConfigurationState.Error -> {
+                    Log.e("Configuration Error: ", it.error.message.toString())
+                }
+                is MainViewModel.ConfigurationState.Success -> {
+                    mainPosterBaseUrl = it.configuration.images.baseUrl + it.configuration.images.posterSizes[5]
+                    similarMoviePosterBaseUrl = it.configuration.images.baseUrl + it.configuration.images.posterSizes[2]
+                    getMovie()
+                }
+            }
+        }
+
+
     }
 
     private fun getMovie() {
@@ -46,6 +68,11 @@ class MainActivity : AppCompatActivity() {
                     binding.tvTitle.text = it.movie.title
                     binding.tvLikes.text = it.movie.likes.toString()
                     binding.tvViews.text = it.movie.views.toString()
+
+                    Glide.with(binding.root.context)
+                        .load(mainPosterBaseUrl + it.movie.poster)
+                        .into(binding.ivMainPoster)
+
                     getGenres()
                 }
             }
@@ -75,6 +102,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("Similar Movies Error: ", it.error.message.toString())
                 }
                 is MainViewModel.SimilarMoviesState.Success -> {
+                    adapter.setImgUrl(similarMoviePosterBaseUrl)
                     adapter.submitList(it.similarMoviesResponse.results)
                 }
             }

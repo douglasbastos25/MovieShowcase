@@ -3,10 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/gradient.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/drawable/ic_like.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_view.xml" value="0.3574074074074074" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22962962962962963" />
         <entry key="app/src/main/res/layout/item_related_movie.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_similar_movie.xml" value="0.190625" />
       </map>
     </option>
   </component>

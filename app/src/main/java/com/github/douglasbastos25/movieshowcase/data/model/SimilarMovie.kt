@@ -13,6 +13,8 @@ data class SimilarMovie(
     val date: String,
 
     @SerializedName("genre_ids")
-    val genres: List<Int>
+    val genres: List<Int>,
 
+    @SerializedName("poster_path")
+    val poster: String
 )
