@@ -97,12 +97,13 @@
         app:srcCompat="@drawable/selector_like" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movies"
+        android:id="@+id/rv_similar_movies"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        tools:listitem="@layout/item_related_movie"
+        tools:listitem="@layout/item_similar_movie"
         android:padding="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
