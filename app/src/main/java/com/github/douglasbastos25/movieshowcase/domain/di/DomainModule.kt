@@ -1,7 +1,8 @@
 package com.github.douglasbastos25.movieshowcase.domain.di
 
+import com.github.douglasbastos25.movieshowcase.domain.GetGenresUseCase
 import com.github.douglasbastos25.movieshowcase.domain.GetMovieUseCase
-import get
+import com.github.douglasbastos25.movieshowcase.domain.GetSimilarMoviesUseCase
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -16,6 +17,12 @@ object DomainModule {
         return module {
             factory {
                 GetMovieUseCase(get())
+            }
+            factory {
+                GetGenresUseCase(get())
+            }
+            factory {
+                GetSimilarMoviesUseCase(get())
             }
         }
     }

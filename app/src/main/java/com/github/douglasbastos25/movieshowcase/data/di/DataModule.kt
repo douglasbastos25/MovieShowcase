@@ -1,7 +1,7 @@
 package com.github.douglasbastos25.movieshowcase.data.di
 
-import com.github.douglasbastos25.movieshowcase.data.repositories.MovieRepository
-import com.github.douglasbastos25.movieshowcase.data.repositories.MovieRepositoryImpl
+import com.github.douglasbastos25.movieshowcase.core.APIKeyInterceptor
+import com.github.douglasbastos25.movieshowcase.data.repositories.*
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -21,12 +21,12 @@ object DataModule {
     private fun networkModules(): Module {
         return module {
             single {
-                val interceptor = HttpLoggingInterceptor()
-
-                interceptor.level = HttpLoggingInterceptor.Level.BODY
+                val httpLoggingInterceptor = HttpLoggingInterceptor()
+                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
                 OkHttpClient.Builder()
-                    .addInterceptor(interceptor)
+                    .addInterceptor(APIKeyInterceptor())
+                    .addInterceptor(httpLoggingInterceptor)
                     .build()
             }
 
@@ -44,6 +44,12 @@ object DataModule {
         return module {
             single<MovieRepository> {
                 MovieRepositoryImpl(get())
+            }
+            single<GenreRepository> {
+                GenreRepositoryImpl(get())
+            }
+            single <SimilarMoviesRepository> {
+                SimilarMoviesRepositoryImpl(get())
             }
         }
     }
