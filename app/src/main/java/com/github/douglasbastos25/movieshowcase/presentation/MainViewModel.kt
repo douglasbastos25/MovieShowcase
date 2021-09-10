@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.douglasbastos25.movieshowcase.data.model.Configuration
 import com.github.douglasbastos25.movieshowcase.data.model.GenresResponse
 import com.github.douglasbastos25.movieshowcase.data.model.Movie
 import com.github.douglasbastos25.movieshowcase.data.model.SimilarMoviesResponse
+import com.github.douglasbastos25.movieshowcase.domain.GetConfigurationUseCase
 import com.github.douglasbastos25.movieshowcase.domain.GetGenresUseCase
 import com.github.douglasbastos25.movieshowcase.domain.GetMovieUseCase
 import com.github.douglasbastos25.movieshowcase.domain.GetSimilarMoviesUseCase
@@ -18,7 +20,8 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val getMovieUseCase: GetMovieUseCase,
     private val getGenresUseCase: GetGenresUseCase,
-    private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase
+    private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase,
+    private val getConfigurationUseCase: GetConfigurationUseCase
 ) : ViewModel() {
 
     private val _movie = MutableLiveData<MovieState>()
@@ -29,6 +32,9 @@ class MainViewModel(
 
     private val _similarMoviesObject = MutableLiveData<SimilarMoviesState>()
     val similarMoviesObject: LiveData<SimilarMoviesState> = _similarMoviesObject
+
+    private val _configuration = MutableLiveData<ConfigurationState>()
+    val configuration: LiveData<ConfigurationState> = _configuration
 
     fun getMovie(id: Int) {
         viewModelScope.launch {
@@ -70,6 +76,19 @@ class MainViewModel(
 
     }
 
+    fun getConfiguration() {
+        viewModelScope.launch {
+            getConfigurationUseCase()
+                .onStart {
+                    _configuration.postValue(ConfigurationState.Loading)
+                }.catch {
+                    _configuration.postValue(ConfigurationState.Error(it))
+                }.collect {
+                    _configuration.postValue(ConfigurationState.Success(it))
+                }
+        }
+    }
+
 
     sealed class MovieState {
         object Loading : MovieState()
@@ -87,5 +106,11 @@ class MainViewModel(
         object Loading : SimilarMoviesState()
         data class Success(val similarMoviesResponse: SimilarMoviesResponse) : SimilarMoviesState()
         data class Error(val error: Throwable) : SimilarMoviesState()
+    }
+
+    sealed class ConfigurationState {
+        object Loading: ConfigurationState()
+        data class Success(val configuration: Configuration): ConfigurationState()
+        data class Error(val error: Throwable): ConfigurationState()
     }
 }
