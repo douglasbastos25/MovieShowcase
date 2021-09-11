@@ -11,7 +11,8 @@ import com.github.douglasbastos25.movieshowcase.data.model.SimilarMovie
 import com.github.douglasbastos25.movieshowcase.data.storage.ContentForAdapter
 import com.github.douglasbastos25.movieshowcase.databinding.ItemSimilarMovieBinding
 
-class SimilarMoviesListAdapter: ListAdapter<SimilarMovie, SimilarMoviesListAdapter.ViewHolder>(DiffCallback()) {
+class SimilarMoviesListAdapter :
+    ListAdapter<SimilarMovie, SimilarMoviesListAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,8 +27,8 @@ class SimilarMoviesListAdapter: ListAdapter<SimilarMovie, SimilarMoviesListAdapt
 
     inner class ViewHolder(
         private val binding: ItemSimilarMovieBinding
-    ): RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: SimilarMovie){
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: SimilarMovie) {
             binding.tvTitle.text = item.title
             binding.tvYear.text = item.date.parseAndGetYear("")
             binding.tvGenre.text = getStringGenres(item.genres)
@@ -48,7 +49,10 @@ class SimilarMoviesListAdapter: ListAdapter<SimilarMovie, SimilarMoviesListAdapt
 
 }
 
-class DiffCallback: DiffUtil.ItemCallback<SimilarMovie>(){
-    override fun areItemsTheSame(oldItem: SimilarMovie, newItem: SimilarMovie) = oldItem.id == newItem.id
-    override fun areContentsTheSame(oldItem: SimilarMovie, newItem: SimilarMovie) = oldItem == newItem
+class DiffCallback : DiffUtil.ItemCallback<SimilarMovie>() {
+    override fun areItemsTheSame(oldItem: SimilarMovie, newItem: SimilarMovie) =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(oldItem: SimilarMovie, newItem: SimilarMovie) =
+        oldItem == newItem
 }

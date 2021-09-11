@@ -15,7 +15,7 @@ class SharedPreferencesLike(context: Context) {
     fun get(value: String): Boolean = preferences.getBoolean(value, false)
 
     private fun put(value: String, like: Boolean): Boolean {
-        if (like){
+        if (like) {
             preferences.edit().putBoolean(value, true).apply()
         } else {
             preferences.edit().remove(value).apply()

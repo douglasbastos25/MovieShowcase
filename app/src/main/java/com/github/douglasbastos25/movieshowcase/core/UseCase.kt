@@ -1,14 +1,13 @@
 package com.github.douglasbastos25.movieshowcase.core
 
 import kotlinx.coroutines.flow.Flow
-import java.lang.UnsupportedOperationException
 
 abstract class UseCase<Param, Source> {
     abstract suspend fun execute(param: Param): Flow<Source>
 
     open suspend operator fun invoke(param: Param) = execute(param)
 
-    abstract class NoParam<Source>: UseCase<None, Flow<Source>>() {
+    abstract class NoParam<Source> : UseCase<None, Flow<Source>>() {
         abstract suspend fun execute(): Flow<Source>
 
         final override suspend fun execute(param: None) = throw UnsupportedOperationException()

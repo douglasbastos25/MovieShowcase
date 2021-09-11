@@ -1,5 +1,6 @@
 package com.github.douglasbastos25.movieshowcase.data.di
 
+import com.github.douglasbastos25.movieshowcase.BuildConfig.TMDB_API_KEY
 import com.github.douglasbastos25.movieshowcase.core.APIKeyInterceptor
 import com.github.douglasbastos25.movieshowcase.data.repositories.*
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
@@ -14,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object DataModule {
 
-    fun load(){
+    fun load() {
         loadKoinModules(networkModules() + repositoryModule())
     }
 
@@ -25,7 +26,7 @@ object DataModule {
                 httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
                 OkHttpClient.Builder()
-                    .addInterceptor(APIKeyInterceptor())
+                    .addInterceptor(APIKeyInterceptor(TMDB_API_KEY))
                     .addInterceptor(httpLoggingInterceptor)
                     .build()
             }
@@ -48,16 +49,19 @@ object DataModule {
             single<GenreRepository> {
                 GenreRepositoryImpl(get())
             }
-            single <SimilarMoviesRepository> {
+            single<SimilarMoviesRepository> {
                 SimilarMoviesRepositoryImpl(get())
             }
-            single <ConfigurationRepository> {
+            single<ConfigurationRepository> {
                 ConfigurationRepositoryImpl(get())
             }
         }
     }
 
-    private inline fun <reified T> createService(client: OkHttpClient, factory: GsonConverterFactory): T{
+    private inline fun <reified T> createService(
+        client: OkHttpClient,
+        factory: GsonConverterFactory
+    ): T {
         return Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/3/")
             .client(client)
