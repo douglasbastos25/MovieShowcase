@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.github.douglasbastos25.movieshowcase.core.parseAndGetYear
 import com.github.douglasbastos25.movieshowcase.data.model.SimilarMovie
+import com.github.douglasbastos25.movieshowcase.data.storage.ContentForAdapter
 import com.github.douglasbastos25.movieshowcase.databinding.ItemSimilarMovieBinding
 
 class SimilarMoviesListAdapter: ListAdapter<SimilarMovie, SimilarMoviesListAdapter.ViewHolder>(DiffCallback()) {
-
-    private var posterUrl: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,21 +29,26 @@ class SimilarMoviesListAdapter: ListAdapter<SimilarMovie, SimilarMoviesListAdapt
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(item: SimilarMovie){
             binding.tvTitle.text = item.title
+            binding.tvYear.text = item.date.parseAndGetYear("")
+            binding.tvGenre.text = getStringGenres(item.genres)
 
             Glide.with(binding.root.context)
-                .load(posterUrl + item.poster)
+                .load(ContentForAdapter.posterUrl + item.poster)
                 .into(binding.ivPoster)
         }
     }
 
-    fun setImgUrl(url: String){
-        posterUrl = url
+    private fun getStringGenres(genresIds: List<Int>): String {
+        return genresIds.joinToString(", ") { id ->
+            ContentForAdapter.genresList.first { genre ->
+                genre.id == id
+            }.name
+        }
     }
+
 }
 
 class DiffCallback: DiffUtil.ItemCallback<SimilarMovie>(){
     override fun areItemsTheSame(oldItem: SimilarMovie, newItem: SimilarMovie) = oldItem.id == newItem.id
-
     override fun areContentsTheSame(oldItem: SimilarMovie, newItem: SimilarMovie) = oldItem == newItem
-
 }
