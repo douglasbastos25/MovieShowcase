@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 object DomainModule {
 
-    fun load(){
+    fun load() {
         loadKoinModules(useCaseModule())
     }
 

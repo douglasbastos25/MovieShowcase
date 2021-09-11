@@ -109,8 +109,8 @@ class MainViewModel(
     }
 
     sealed class ConfigurationState {
-        object Loading: ConfigurationState()
-        data class Success(val configuration: Configuration): ConfigurationState()
-        data class Error(val error: Throwable): ConfigurationState()
+        object Loading : ConfigurationState()
+        data class Success(val configuration: Configuration) : ConfigurationState()
+        data class Error(val error: Throwable) : ConfigurationState()
     }
 }
