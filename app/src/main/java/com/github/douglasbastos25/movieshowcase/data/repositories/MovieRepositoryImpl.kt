@@ -7,7 +7,7 @@ import java.lang.Exception
 
 class MovieRepositoryImpl(private val service: TheMovieDBService): MovieRepository {
 
-    override suspend fun getMovieData(id: Int) = flow<Movie> {
+    override suspend fun getMovieData(id: Int) = flow {
         try {
             val movie = service.getMovie(id)
             emit(movie)

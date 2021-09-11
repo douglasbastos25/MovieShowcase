@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.github.douglasbastos25.movieshowcase.data.model.Genre
 import com.github.douglasbastos25.movieshowcase.data.storage.ContentForAdapter
 import com.github.douglasbastos25.movieshowcase.preferences.SharedPreferencesLike
 import com.github.douglasbastos25.movieshowcase.preferences.SharedPreferencesLike.Companion.LIKE_VALUE
@@ -17,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private lateinit var preferencesLike: SharedPreferencesLike
     private val viewModel by viewModel<MainViewModel>()
-    private var genresList: List<Genre> = listOf()
     private val adapter by lazy {SimilarMoviesListAdapter()}
 
     private var mainPosterBaseUrl = ""
@@ -34,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvSimilarMovies.adapter = adapter
 
         getConfiguration()
-        loadContent()
+        loadSharedPreferences()
         setListeners()
     }
 
@@ -52,8 +50,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
 
     private fun getMovie() {
@@ -107,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadContent() {
+    private fun loadSharedPreferences() {
         preferencesLike = SharedPreferencesLike(this)
         binding.btLike.isSelected = preferencesLike.get(LIKE_VALUE)
     }

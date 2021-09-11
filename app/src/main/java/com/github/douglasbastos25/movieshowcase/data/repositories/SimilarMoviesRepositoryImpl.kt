@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 
 class SimilarMoviesRepositoryImpl(private val service: TheMovieDBService): SimilarMoviesRepository {
 
-    override suspend fun getSimilarMoviesData(id: Int) = flow<SimilarMoviesResponse> {
+    override suspend fun getSimilarMoviesData(id: Int) = flow {
         try {
             val similarMovies = service.getSimilarMovies(id)
             emit(similarMovies)
