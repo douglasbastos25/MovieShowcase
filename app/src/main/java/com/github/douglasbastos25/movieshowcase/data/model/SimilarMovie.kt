@@ -17,4 +17,9 @@ data class SimilarMovie(
 
     @SerializedName("poster_path")
     val poster: String
+
+)
+
+class SimilarMoviesResponse(
+    val results: List<SimilarMovie>
 )
