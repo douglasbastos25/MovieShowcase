@@ -1,6 +1,5 @@
 package com.github.douglasbastos25.movieshowcase.data.repositories
 
-import com.github.douglasbastos25.movieshowcase.data.model.SimilarMoviesResponse
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
 import kotlinx.coroutines.flow.flow
 

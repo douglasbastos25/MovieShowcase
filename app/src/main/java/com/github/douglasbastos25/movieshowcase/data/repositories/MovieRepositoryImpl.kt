@@ -1,6 +1,5 @@
 package com.github.douglasbastos25.movieshowcase.data.repositories
 
-import com.github.douglasbastos25.movieshowcase.data.model.Movie
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception

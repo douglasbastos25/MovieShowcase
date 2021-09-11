@@ -1,5 +1,6 @@
 package com.github.douglasbastos25.movieshowcase.core
 
+import com.github.douglasbastos25.movieshowcase.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.HttpUrl
@@ -12,7 +13,7 @@ class APIKeyInterceptor: Interceptor {
         val originalHttpUrl: HttpUrl = original.url
 
         val url = originalHttpUrl.newBuilder()
-            .addQueryParameter("api_key", TMDBApiConfig.API_KEY)
+            .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
             .build()
 
         val requestBuilder: Request.Builder = original.newBuilder()
