@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.github.douglasbastos25.movieshowcase.data.storage.ContentForAdapter
 import com.github.douglasbastos25.movieshowcase.databinding.ActivityMainBinding
-import com.github.douglasbastos25.movieshowcase.preferences.SharedPreferencesLike
-import com.github.douglasbastos25.movieshowcase.preferences.SharedPreferencesLike.Companion.LIKE_VALUE
+import com.github.douglasbastos25.movieshowcase.core.preferences.SharedPreferencesLike
+import com.github.douglasbastos25.movieshowcase.core.preferences.SharedPreferencesLike.Companion.LIKE_VALUE
 import com.github.douglasbastos25.movieshowcase.presentation.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val MOVIE_ID = 38
+        const val mainPosterSize = "w780"
+        const val posterSize = "w185"
     }
 
 
@@ -45,9 +46,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 is MainViewModel.ConfigurationState.Success -> {
                     mainPosterBaseUrl =
-                        it.configuration.images.baseUrl + it.configuration.images.posterSizes[5]
-                    ContentForAdapter.posterUrl =
-                        it.configuration.images.baseUrl + it.configuration.images.posterSizes[2]
+                        it.configuration.images.baseUrl + mainPosterSize
+                    ContentForAdapter.posterBaseUrl =
+                        it.configuration.images.baseUrl + posterSize
                     getMovie()
                 }
             }
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("Movie Error: ", it.error.message.toString())
                 }
                 is MainViewModel.MovieState.Success -> {
-                    binding.tvTitle.text = it.movie.title
+                    binding.tvMovieTitle.text = it.movie.title
                     binding.tvLikes.text = it.movie.likes.toString()
                     binding.tvViews.text = it.movie.views.toString()
 

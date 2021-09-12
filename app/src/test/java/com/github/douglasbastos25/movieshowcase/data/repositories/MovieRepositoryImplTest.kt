@@ -7,7 +7,7 @@ import com.github.douglasbastos25.movieshowcase.data.model.SimilarMoviesResponse
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class MovieRepositoryImplTest {
@@ -40,9 +40,13 @@ class MovieRepositoryImplTest {
                     TODO("Not Used In This Test")
                 }
             }
-            val movieRepositoryImpl = MovieRepositoryImpl(service)
-            val resultMovie = movieRepositoryImpl.getMovieData(expectedMovie.id)
-            assertEquals(expectedMovie, resultMovie.first())
+            val resultMovie = MovieRepositoryImpl(service).getMovieData(expectedMovie.id).first()
+
+            assertEquals(expectedMovie.id, resultMovie.id)
+            assertEquals(expectedMovie.title, resultMovie.title)
+            assertEquals(expectedMovie.likes, resultMovie.likes)
+            assertEquals(expectedMovie.views, resultMovie.views, 0.0)
+            assertEquals(expectedMovie.poster, resultMovie.poster)
         }
     }
 }

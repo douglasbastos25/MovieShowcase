@@ -1,0 +1,16 @@
+{
+  "genres": [
+    {
+      "id": 76,
+      "name": "Adventure"
+    },
+    {
+      "id": 32,
+      "name": "Science Fiction"
+    },
+    {
+      "id": 45,
+      "name": "Comedy"
+    }
+  ]
+}

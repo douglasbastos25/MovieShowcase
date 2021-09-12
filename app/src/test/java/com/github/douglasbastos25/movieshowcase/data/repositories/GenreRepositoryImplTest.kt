@@ -4,7 +4,7 @@ import com.github.douglasbastos25.movieshowcase.data.model.*
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class GenreRepositoryImplTest {
@@ -42,10 +42,12 @@ class GenreRepositoryImplTest {
                 }
 
             }
-            val genreRepositoryImpl = GenreRepositoryImpl(service)
-            val genresResult = genreRepositoryImpl.getGenresData()
-            assertEquals(expectedGenre, genresResult.first())
+            val genresResult = GenreRepositoryImpl(service).getGenresData().first()
+
+            assertEquals(expectedGenre.genres.first().id, genresResult.genres.first().id)
+            assertEquals(expectedGenre.genres.first().name, genresResult.genres.first().name)
+            assertEquals(expectedGenre.genres.last().id, genresResult.genres.last().id)
+            assertEquals(expectedGenre.genres.last().name, genresResult.genres.last().name)
         }
     }
-
 }
