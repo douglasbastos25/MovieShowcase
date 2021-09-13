@@ -20,6 +20,6 @@ data class SimilarMovie(
 
 )
 
-class SimilarMoviesResponse(
+data class SimilarMoviesResponse(
     val results: List<SimilarMovie>
 )

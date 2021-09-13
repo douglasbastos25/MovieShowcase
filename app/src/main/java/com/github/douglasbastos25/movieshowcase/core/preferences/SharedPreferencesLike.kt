@@ -1,4 +1,4 @@
-package com.github.douglasbastos25.movieshowcase.preferences
+package com.github.douglasbastos25.movieshowcase.core.preferences
 
 import android.content.Context
 import android.content.SharedPreferences

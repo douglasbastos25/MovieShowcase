@@ -20,6 +20,7 @@ class APIKeyInterceptor(private val apiKey: String) : Interceptor {
             .url(url)
 
         val request: Request = requestBuilder.build()
+
         return chain.proceed(request)
     }
 

@@ -4,7 +4,7 @@ import com.github.douglasbastos25.movieshowcase.data.model.*
 import com.github.douglasbastos25.movieshowcase.data.services.TheMovieDBService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class ConfigurationRepositoryImplTest {
@@ -12,7 +12,6 @@ class ConfigurationRepositoryImplTest {
     val expectedConfiguration = Configuration(
         Image(
             "https://image.tmdb.org/t/p/",
-            listOf("w300", "w780", "w1280", "original"),
         )
     )
 
@@ -36,9 +35,12 @@ class ConfigurationRepositoryImplTest {
                     TODO("Not Used In This Test")
                 }
             }
-            val configurationRepositoryImpl = ConfigurationRepositoryImpl(service)
-            val resultConfiguration = configurationRepositoryImpl.getConfiguration()
-            assertEquals(expectedConfiguration, resultConfiguration.first())
+            val resultConfiguration =
+                ConfigurationRepositoryImpl(service).getConfiguration().first()
+            assertEquals(
+                expectedConfiguration.images.baseUrl,
+                resultConfiguration.images.baseUrl
+            )
         }
     }
 }
